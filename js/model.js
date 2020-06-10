@@ -21,11 +21,44 @@ var gMeme = {
             txt: 'I never eat Falafel',
             size: 50,
             align: 'center',
-            color: 'white'
+            color: 'white',
+            x: 250,
+            y: 50
         }
     ]
 }
 
+function updateLineLocation(x, y) {
+    let currLine = getCurrLine()
+    currLine.x = x;
+    currLine.y = y;
+}
+
+function updateLocaationBy(direction) {
+    let currLine = getCurrLine()
+    if (direction === 'up') {
+        currLine.y -= 5
+    } else if (direction === 'down') {
+        currLine.y += 5
+    }
+
+
+}
+function resizeFontSize(sign) {
+    let currLine = getCurrLine()
+
+
+    if (sign === '+') {
+        currLine.size++
+    } else if (sign === '-') {
+        currLine.size--
+    }
+}
+
+function resizeFontSizeByNumber(num) {
+    let currLine = getCurrLine()
+    currLine.size = num
+}
 function updateSelectedImg(imgId) {
     gMeme.selectedImgId = imgId
 }

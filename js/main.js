@@ -39,13 +39,36 @@ function onSelectImg(imgId) {
     renderCanvas()
 }
 
+function onMove(direction) {
+    updateLocaationBy(direction)
+    renderCanvas()
+}
+
+function renderCanvas() {
+    renderSizeInput()
+    drawImgFromlocal()
+}
+
+function drawImgFromlocal() {
+    let currImg = getCurrImg()
+    var img = new Image()
+    img.src = currImg.url;//'./img/waves.jpg'
+    img.onload = () => {
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
+        gIsImgLoaded = true
+        drawTextUpLine()
+    }
+}
+
 function drawTextUpLine(text = 'text', x = gElCanvas.width / 2, y = 50) {
     let currLine = getCurrLine()
     text = currLine.txt
     let size = currLine.size
     let align = currLine.align
     let color = currLine.color
-
+    x = currLine.x
+    y = currLine.y
+    // updateLineLocation(x, y)
     gCtx.lineWidth = '2';
     gCtx.strokeStyle = 'black';
     gCtx.fillStyle = color;
@@ -56,20 +79,27 @@ function drawTextUpLine(text = 'text', x = gElCanvas.width / 2, y = 50) {
     gCtx.strokeText(text, x, y);
 }
 
-function drawImgFromlocal() {
-    let currImg = getCurrImg()
-    console.log('currImg:', currImg)
-    var img = new Image()
-    img.src = currImg.url;//'./img/waves.jpg'
-    img.onload = () => {
-        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
-        gIsImgLoaded = true
-        drawTextUpLine()
-    }
+function onResize(sign) {
+    console.log('sign:', sign)
+    resizeFontSize(sign)
+    renderCanvas()
+}
+function onResizeInput(num) {
+    resizeFontSizeByNumber(num)
+    renderCanvas()
 }
 
-function renderCanvas() {
-    drawImgFromlocal()
+
+
+
+
+
+
+function renderSizeInput() {
+    let currLine = getCurrLine()
+    let size = currLine.size
+    let elFontSizeInput = document.querySelector("[name=font-size]")
+    elFontSizeInput.value = size
 
 }
 

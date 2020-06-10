@@ -18,7 +18,17 @@
         <label for="text">Text:
             <input onkeyup="onSetText(this.value)" type="text" name="text" id="text">
         </label>
-
+        <div>
+            <label>Text Size:</label>
+            <button onclick="onResize(this.value)" value="+">+</button>
+            <button onclick="onResize(this.value)" value="-">-</button>
+            <input name="font-size" type="number" onchange="onResizeInput(this.value)"
+                onkeyup="onResizeInput(this.value)">
+        </div>
+        <div>
+            <button onclick="onMove(this.value)" value="down">&#8595</button>
+            <button onclick="onMove(this.value)" value="up">&#8593</button>
+        </div>
         <select onchange="setShape(this.value)">
             <option value="line">Line</option>
             <option value="triangle">Triangle</option>
