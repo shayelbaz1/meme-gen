@@ -16,8 +16,27 @@ function init() {
     resizeCanvas()
     // gCtx.fillStyle = 'lightgreen';
     // gCtx.fillRect(0, 0, gElCanvas.width, gElCanvas.height);
-    drawImgFromlocal()
+    // drawImgFromlocal()
     // drawImgFromRemote()
+    renderCanvas()
+    renderGallery()
+}
+
+function renderGallery() {
+    let images = getAllImages()
+
+    let strHtml = images.map(function (img) {
+        return `
+        <img onclick="onSelectImg('${img.id}')" src="../img/${img.id}.jpg">
+        `
+    }).join('')
+
+    let elGallery = document.querySelector('.grid-container')
+    elGallery.innerHTML = strHtml
+}
+function onSelectImg(imgId) {
+    updateSelectedImg(+imgId)
+    renderCanvas()
 }
 
 function drawTextUpLine(text = 'text', x = gElCanvas.width / 2, y = 50) {
@@ -39,6 +58,7 @@ function drawTextUpLine(text = 'text', x = gElCanvas.width / 2, y = 50) {
 
 function drawImgFromlocal() {
     let currImg = getCurrImg()
+    console.log('currImg:', currImg)
     var img = new Image()
     img.src = currImg.url;//'./img/waves.jpg'
     img.onload = () => {
@@ -46,6 +66,18 @@ function drawImgFromlocal() {
         gIsImgLoaded = true
         drawTextUpLine()
     }
+}
+
+function renderCanvas() {
+    drawImgFromlocal()
+
+}
+
+function onSetText(txt) {
+    updateTxt(txt)
+    console.log('txt:', txt)
+    renderCanvas()
+
 }
 
 function resizeCanvas() {
