@@ -10,44 +10,57 @@
 
 <body onload="init()">
 
-    <div class="flex space-around">
-
-        <label for="color">Color:
-            <input onchange="setColor(this.value)" type="color" name="color" id="color">
-        </label>
-        <label for="text">Text:
-            <input onkeyup="onSetText(this.value)" type="text" name="text" id="text">
-        </label>
-        <div>
-            <label>Text Size:</label>
-            <button onclick="onResize(this.value)" value="+">+</button>
-            <button onclick="onResize(this.value)" value="-">-</button>
-            <input name="font-size" type="number" onchange="onResizeInput(this.value)"
-                onkeyup="onResizeInput(this.value)">
+    <header class="main-header">
+        <div class="header-content flex space-between align-center">
+            <div class="logo">LOGO</div>
+            <nav class="main-nav flex">
+                <a href="">Gallery</a>
+                <a href="">About</a>
+            </nav>
         </div>
-        <div>
-            <button onclick="onMove(this.value)" value="down">&#8595</button>
-            <button onclick="onMove(this.value)" value="up">&#8593</button>
+    </header>
+    <main class="main-container flex space-around wrap">
+        <div class="panel-container flex column">
+
+            <label class="text-input" for="text">Text:
+                <input onkeyup="onSetText(this.value)" type="text" name="text" id="text">
+            </label>
+            <label for="color">Color:
+                <input onchange="setColor(this.value)" type="color" name="color" id="color">
+            </label>
+            <div>
+                <label>Text Size:</label>
+                <button onclick="onResize(this.value)" value="+">+</button>
+                <button onclick="onResize(this.value)" value="-">-</button>
+                <input name="font-size" type="number" onchange="onResizeInput(this.value)"
+                    onkeyup="onResizeInput(this.value)">
+            </div>
+            <div>
+                <button onclick="onMove(this.value)" value="down">&#8595</button>
+                <button onclick="onMove(this.value)" value="up">&#8593</button>
+            </div>
+            <button onclick="onSwitchLines()" value="switch-lines">&#8597</button>
+            <select onchange="setShape(this.value)">
+                <option value="line">Line</option>
+                <option value="triangle">Triangle</option>
+                <option value="rect">Rect</option>
+                <option value="text">Text</option>
+                <option value="arc">Circle</option>
+            </select>
+
+            <button onclick="clearCanvas()">Clear</button>
+
+            <a href="#" onclick="onDownloadCanvas(this)" download="">Download</a>
+
         </div>
-        <button onclick="onSwitchLines()" value="switch-lines">&#8597</button>
 
-        <select onchange="setShape(this.value)">
-            <option value="line">Line</option>
-            <option value="triangle">Triangle</option>
-            <option value="rect">Rect</option>
-            <option value="text">Text</option>
-            <option value="arc">Circle</option>
-        </select>
 
-        <button onclick="clearCanvas()">Clear</button>
+        <div class="canvas-container">
+            <canvas onmouseup="onMouseUp()" onmousedown="onMouseDown(event)" onmousemove="onMouseMove(event)"
+                id="my-canvas" style="border: 1px solid black;"></canvas>
+        </div>
 
-        <a href="#" onclick="onDownloadCanvas(this)" download="">Download</a>
-    </div>
-    <hr>
-    <div class="canvas-container">
-        <canvas onmouseup="onMouseUp()" onmousedown="onMouseDown(event)" onmousemove="onMouseMove(event)" id="my-canvas"
-            style="border: 1px solid black;"></canvas>
-    </div>
+    </main>
     <hr>
     <!-- Gallery -->
     <div class="grid-container"></div>
