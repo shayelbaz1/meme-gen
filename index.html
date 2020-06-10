@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Mister Canvas</title>
+</head>
+
+<body onload="init()">
+
+    <div class="flex space-around">
+
+        <label for="color">Color:
+            <input onchange="setColor(this.value)" type="color" name="color" id="color">
+        </label>
+
+        <select onchange="setShape(this.value)">
+            <option value="line">Line</option>
+            <option value="triangle">Triangle</option>
+            <option value="rect">Rect</option>
+            <option value="text">Text</option>
+            <option value="arc">Circle</option>
+        </select>
+
+        <button onclick="clearCanvas()">Clear</button>
+
+        <a href="#" onclick="onDownloadCanvas(this)" download="">Download</a>
+    </div>
+    <hr>
+    <div class="canvas-container">
+        <canvas onmouseup="onMouseUp()" onmousedown="onMouseDown(event)" onmousemove="onMouseMove(event)" id="my-canvas"
+            style="border: 1px solid black;"></canvas>
+    </div>
+
+
+
+    <script src="lib/hammer.min.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
