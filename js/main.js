@@ -34,6 +34,11 @@ function renderGallery() {
     let elGallery = document.querySelector('.grid-container')
     elGallery.innerHTML = strHtml
 }
+function onSwitchLines() {
+    updateSelectedLine()
+}
+
+
 function onSelectImg(imgId) {
     updateSelectedImg(+imgId)
     renderCanvas()
@@ -60,23 +65,27 @@ function drawImgFromlocal() {
     }
 }
 
-function drawTextUpLine(text = 'text', x = gElCanvas.width / 2, y = 50) {
-    let currLine = getCurrLine()
-    text = currLine.txt
-    let size = currLine.size
-    let align = currLine.align
-    let color = currLine.color
-    x = currLine.x
-    y = currLine.y
-    // updateLineLocation(x, y)
-    gCtx.lineWidth = '2';
-    gCtx.strokeStyle = 'black';
-    gCtx.fillStyle = color;
-    gCtx.font = `${size}px impact`;
-    gCtx.textAlign = align;
+function drawTextUpLine(text, x, y) {
+    // let currLine = getCurrLine()
+    let lines = getLines()
+    lines.forEach(currLine => {
+        text = currLine.txt
+        x = currLine.x
+        y = currLine.y
 
-    gCtx.fillText(text, x, y);
-    gCtx.strokeText(text, x, y);
+        let size = currLine.size
+        let align = currLine.align
+        let color = currLine.color
+
+        gCtx.lineWidth = '2';
+        gCtx.strokeStyle = 'black';
+        gCtx.fillStyle = color;
+        gCtx.font = `${size}px impact`;
+        gCtx.textAlign = align;
+
+        gCtx.fillText(text, x, y);
+        gCtx.strokeText(text, x, y);
+    });
 }
 
 function onResize(sign) {

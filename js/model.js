@@ -18,14 +18,29 @@ var gMeme = {
 
     lines: [
         {
-            txt: 'I never eat Falafel',
+            txt: 'I love cows',
             size: 50,
             align: 'center',
             color: 'white',
             x: 250,
             y: 50
+        },
+        {
+            txt: 'So I never eat my wife',
+            size: 50,
+            align: 'center',
+            color: 'white',
+            x: 250,
+            y: 450
         }
     ]
+}
+function updateSelectedLine() {
+    gMeme.selectedLineIdx += 1
+    if (gMeme.selectedLineIdx === gMeme.lines.length) {
+        gMeme.selectedLineIdx = 0;
+    }
+    console.log('gMeme.selectedLineIdx:', gMeme.selectedLineIdx)
 }
 
 function updateLineLocation(x, y) {
@@ -78,4 +93,8 @@ function getCurrImg() {
 
 function getCurrLine() {
     return gMeme.lines[gMeme.selectedLineIdx]
+}
+
+function getLines() {
+    return gMeme.lines
 }
