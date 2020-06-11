@@ -8,18 +8,24 @@ var gCurrColor = 'white';
 var glastPos;
 var gIsMouseDown = false;
 var gIsImgLoaded = false;
+var gIsBlur = false
 
 
 function init() {
     gElCanvas = document.getElementById('my-canvas');
     gCtx = gElCanvas.getContext('2d');
     resizeCanvas()
-    // gCtx.fillStyle = 'lightgreen';
-    // gCtx.fillRect(0, 0, gElCanvas.width, gElCanvas.height);
-    // drawImgFromlocal()
-    // drawImgFromRemote()
     renderCanvas()
     renderGallery()
+}
+
+
+function renderCanvas(isBlur = false) {
+    gIsBlur = isBlur
+    resetShareButton()
+    renderTextInput()
+    renderSizeInput()
+    drawImgFromlocal()
 }
 
 function renderGallery() {
@@ -34,14 +40,64 @@ function renderGallery() {
     let elGallery = document.querySelector('.grid-container')
     elGallery.innerHTML = strHtml
 }
+
+function onShowGalleryToggle() {
+    let elMainContainer = document.querySelector('.main-container')
+    elMainContainer.classList.toggle('hide')
+}
+
+function onBtnSquare() {
+    let isBlur = !gIsBlur
+    renderCanvas(isBlur)
+}
+
+function onSetColorFont(newColor) {
+    console.log('newColor:', newColor)
+    updateCurrColor(newColor)
+    renderCanvas()
+
+}
+
+
+
+function onStroke() {
+    updateStroke()
+    renderCanvas()
+
+}
+
+function onAlign(newAlign) {
+    updateCurrLineAlign(newAlign)//Doing to opposite...
+    renderCanvas()
+
+}
+
+function onDeleteLine() {
+    deleteLine()
+    renderCanvas()
+}
+
+function onAddLine(value) {
+    let elTextInput = document.querySelector('[name=text]')
+    var value = elTextInput.value
+    console.log('value:', value)
+    addLine(value)
+    renderCanvas()
+}
 function onSwitchLines() {
+    // let elCurrLine = document.querySelector('')
     updateSelectedLine()
     renderTextInput()
+    renderCanvas()
 }
 
 
 function onSelectImg(imgId) {
     updateSelectedImg(+imgId)
+    let elMainContainer = document.querySelector('.main-container')
+    if (elMainContainer.classList.contains('hide')) {
+        elMainContainer.classList.remove('hide')
+    }
     renderCanvas()
 }
 
@@ -50,12 +106,9 @@ function onMove(direction) {
     renderCanvas()
 }
 
-function renderCanvas() {
-    renderTextInput()
-    renderSizeInput()
-    drawImgFromlocal()
-}
+
 function renderTextInput() {
+    if (getLines().length === 0) return
     let elTextInput = document.querySelector('[name=text]')
     elTextInput.value = getCurrLine().txt
 }
@@ -73,7 +126,8 @@ function drawImgFromlocal() {
 function drawTextLine(text, x, y) {
     // let currLine = getCurrLine()
     let lines = getLines()
-    lines.forEach(currLine => {
+    let currIdx = getCurrIdx()
+    lines.forEach((currLine, idx) => {
         text = currLine.txt
         x = currLine.x
         y = currLine.y
@@ -81,9 +135,17 @@ function drawTextLine(text, x, y) {
         let size = currLine.size
         let align = currLine.align
         let color = currLine.color
+        let stroke = currLine.stroke
+        let strokeColor = currLine.strokeColor
+        if (idx === currIdx && !gIsBlur) {
+            drawRect(x, y, size + 16, 'white')
+        }
+        // if (idx === currIdx && !gIsBlur) drawRect(x, y, size + 16, 'white')
+        // if (gIsBlur) drawRect(x, y, size + 20, '#00000000')
 
-        gCtx.lineWidth = '2';
-        gCtx.strokeStyle = 'black';
+
+        gCtx.lineWidth = stroke;
+        gCtx.strokeStyle = strokeColor;
         gCtx.fillStyle = color;
         gCtx.font = `${size}px impact`;
         gCtx.textAlign = align;
@@ -104,6 +166,7 @@ function onResizeInput(num) {
 }
 
 function renderSizeInput() {
+    if (getLines().length === 0) return
     let currLine = getCurrLine()
     let size = currLine.size
     let elFontSizeInput = document.querySelector("[name=font-size]")
@@ -148,15 +211,16 @@ function drawTriangle(x, y) {
     gCtx.fill();
 }
 
-function drawRect(x, y) {
+function drawRect(x, y, height, strokeColor = '#00000000') {
+    let width = 1000;
     gCtx.beginPath();
-    var randInt = getRandomIntEx(10, 100)
-    gCtx.rect(x - randInt / 2, y - randInt / 2, randInt, randInt);
+    gCtx.rect(x - width / 2, y - height / 2 - 15, width, height);
     // gCtx.rect(x-75, y-75, 150, 150);
-    gCtx.strokeStyle = 'black';
+    gCtx.lineWidth = 1;
+    gCtx.strokeStyle = strokeColor;
     gCtx.stroke();
-    gCtx.fillStyle = gCurrColor;
-    gCtx.fillRect(x - randInt / 2, y - randInt / 2, randInt, randInt);
+    gCtx.fillStyle = '#00000000';
+    gCtx.fillRect(x - width / 2, y - height / 2 - 15, width, height);
 }
 
 function drawArc(x, y) {
@@ -188,8 +252,10 @@ function clearCanvas() {
     gCtx.fillRect(0, 0, gElCanvas.width, gElCanvas.height);
 }
 
-function setColor(color) {
-    gCurrColor = color
+function setColorStroke(newColor) {
+    updateStrokeColor(newColor)
+    renderCanvas()
+    // gCurrColor = color
 }
 
 function setShape(shape) {
@@ -248,4 +314,9 @@ function onDownloadCanvas(elLink) {
     const data = gElCanvas.toDataURL();
     elLink.href = data;
     elLink.download = 'my-paint';
+}
+
+function downloadImg(elLink) {
+    var imgContent = gElCanvas.toDataURL('image/jpeg');
+    elLink.href = imgContent
 }

@@ -12,14 +12,14 @@
 
     <header class="main-header">
         <div class="header-content flex space-between align-center">
-            <div class="logo">LOGO</div>
+            <div class="logo">Meme</div>
             <nav class="main-nav flex">
-                <a href="">Gallery</a>
+                <a href="#" onclick="onShowGalleryToggle()">Gallery</a>
                 <a href="">About</a>
             </nav>
         </div>
     </header>
-    <main class="main-container flex space-around wrap" hidden>
+    <main class="main-container flex space-around wrap">
         <div class="panel-container flex column">
 
             <div class="text-box flex">
@@ -27,15 +27,23 @@
             </div>
 
             <div class="btns-container flex center">
+
+                <button class="btn btn-square" onclick="onBtnSquare()">
+                    <img src="/img/svgs/square.svg">
+                </button>
+
                 <button class="btn btn-switch-lines" value="switch-lines" onclick="onSwitchLines()">
                     <img src="/img/svgs/switch-lines.svg">
                 </button>
-                <button class="btn btn-add" value="switch-lines" onclick="onSwitchLines()">
+
+                <button class="btn btn-add" value="add-line" onclick="onAddLine()">
                     &#43
                 </button>
-                <button class="btn btn-delete" value="switch-lines" onclick="onSwitchLines()">
+
+                <button class="btn btn-delete" value="delete-line" onclick="onDeleteLine()">
                     <img src="/img/svgs/delete.svg">
                 </button>
+
             </div>
 
             <div class="btns-edit-container flex center wrap">
@@ -45,27 +53,32 @@
                 <button class="btn btn-white" value="-" onclick="onResize(this.value)">
                     <img src="/img/icons/font-.png">
                 </button>
-                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                <button class="btn btn-white" value="left" onclick="onAlign(this.value)">
                     <img src="/img/icons/align-left.png">
                 </button>
-                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                <button class="btn btn-white" value="center" onclick="onAlign(this.value)">
                     <img src="/img/icons/align-center.png">
                 </button>
-                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                <button class="btn btn-white" value="right" onclick="onAlign(this.value)">
                     <img src="/img/icons/align-right.png">
                 </button>
+
+                <input class="btn btn-white" value="#ffffff" onchange="onSetColorFont(this.value)" type="color"
+                    name="color-font" id="color">
 
                 <div class="num-box num">
                     <input name="font-size" type="number" onchange="onResizeInput(this.value)"
                         onkeyup="onResizeInput(this.value)">
                 </div>
 
-                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                <button class="btn btn-white" value="stroke" onclick="onStroke()">
                     <img src="/img/icons/stroke.png">
                 </button>
 
 
-                <input class="btn btn-white" onchange="setColor(this.value)" type="color" name="color" id="color">
+                <input class="btn btn-white" onchange="setColorStroke(this.value)" type="color" name="color-stroke"
+                    id="color">
+
 
                 <div class="btns-container">
                     <button class="btn btn-white" onclick="onMove(this.value)" value="down">
@@ -79,10 +92,29 @@
             </div>
 
             <div class="btns-container flex center social">
-                <button class="btn btn-white download" href="#" onclick="onDownloadCanvas(this)"
-                    download="">Download</button>
-                <button class="btn btn-white share" href="#" onclick="onDownloadCanvas(this)" download="">Share</button>
+
+                <a class="download btn btn-white flex center align-center " href="#" onclick="onDownloadCanvas(this)"
+                    download="">Download</a>
+
+                <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+
+                    <input name="img" id="imgData" type="hidden" />
+
+                    <div class="share-container">
+                        <button class="social publish btn center align-center" type="submit">Publish</button>
+                    </div>
+
+
+
+                </form>
+
+
+
+
+
             </div>
+
+
         </div>
 
 
@@ -94,10 +126,11 @@
     </main>
     <hr>
     <!-- Gallery -->
-    <div class="grid-container"></div>
+    <div class="grid-container" id="#gallery"></div>
 
 
     <!-- <script src="lib/hammer.min.js"></script> -->
+    <script src="js/upload-service.js"></script>
     <script src="js/util.js"></script>
     <script src="js/model.js"></script>
     <script src="js/main.js"></script>

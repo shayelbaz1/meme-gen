@@ -71,13 +71,18 @@ body {
     padding: 30px 0;
 }
 
+.main-container.hide {
+    display: none;
+}
+
 .panel-container {
     background-color: lightgray;
     padding: 20px;
     border-radius: 30px;
     box-shadow: 1px 2px 26px 1px #ffffff5d;
     background-color: #68686879;
-    order: 1
+    order: 1;
+    align-items: center;
 }
 
 .grid-panel {
@@ -111,6 +116,28 @@ canvas {
     display: inline-block;
 }
 
+@media (max-width: 980px) {
+    .canvas-container {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .canvas-container {
+        margin-bottom: 2rem;
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 420px) {
+    .canvas-container {
+        margin-bottom: 2rem;
+        width: 300px;
+        height: 300px;
+    }
+}
+
 /*#endregion  */
 
 /*#region PANEL ITEMS  */
@@ -124,6 +151,7 @@ canvas {
     background-color: #ebeef3;
     justify-content: center;
     margin-bottom: 1rem;
+    width: -webkit-fill-available;
 }
 
 .text-box input {
@@ -162,6 +190,19 @@ canvas {
     margin-left: 1.2rem;
 }
 
+.btn-square {
+    /* background-image: linear-gradient(-38deg, #42eb5c 0%, #37b34a 100%); */
+    background-color: #ffff3cbf;
+    box-shadow: 1px 5px 0 #a9a300, inset 0 5px 0 rgba(255, 255, 255, 0.58);
+    /* font-size: 1rem; */
+    color: white;
+    text-shadow: 1px 3px 0 rgba(1, 93, 51, 0.61);
+}
+
+.btn-square:active {
+    line-height: 10px;
+}
+
 .btn-switch-lines {
     background-image: linear-gradient(-38deg, #66c4dc 0%, #40b1ce 50%, #0c98bb 100%);
     box-shadow: 1px 5px 0 #048b97, inset 0 5px 0 rgba(255, 255, 255, 0.58);
@@ -194,6 +235,10 @@ canvas {
 
 .btn:active img {
     margin-top: 0px
+}
+
+.btn-square img {
+    margin-top: 9px
 }
 
 /*#endregion */
@@ -274,6 +319,7 @@ canvas {
     padding: inherit;
     color: white;
     font-size: 1rem;
+    text-decoration: none;
 }
 
 .download {
@@ -281,9 +327,24 @@ canvas {
     background-color: #1e7cd3;
 }
 
-.share {
+.publish {
     box-shadow: 1px 6px 0 #632687, inset 0 5px 0 #ffffff8c;
     background-color: #8f44bb;
+    width: 140px;
+    font-size: 1rem;
+    font-family: popReg;
+    color: white;
+    text-decoration: none;
+}
+
+.share {
+    box-shadow: 1px 6px 0 #42eb5c, inset 0 5px 0 #ffffff8c;
+    background-color: #26ab3b;
+    width: 140px;
+    font-size: 1rem;
+    font-family: popReg;
+    color: white;
+    text-decoration: none;
 }
 
 /*#endregion  */
