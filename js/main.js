@@ -27,7 +27,7 @@ function renderGallery() {
 
     let strHtml = images.map(function (img) {
         return `
-        <img onclick="onSelectImg('${img.id}')" src="../img/${img.id}.jpg">
+        <img onclick="onSelectImg('${img.id}')" src="./img/${img.id}.jpg">
         `
     }).join('')
 
@@ -36,6 +36,7 @@ function renderGallery() {
 }
 function onSwitchLines() {
     updateSelectedLine()
+    renderTextInput()
 }
 
 
@@ -50,10 +51,14 @@ function onMove(direction) {
 }
 
 function renderCanvas() {
+    renderTextInput()
     renderSizeInput()
     drawImgFromlocal()
 }
-
+function renderTextInput() {
+    let elTextInput = document.querySelector('[name=text]')
+    elTextInput.value = getCurrLine().txt
+}
 function drawImgFromlocal() {
     let currImg = getCurrImg()
     var img = new Image()
@@ -61,11 +66,11 @@ function drawImgFromlocal() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
         gIsImgLoaded = true
-        drawTextUpLine()
+        drawTextLine()
     }
 }
 
-function drawTextUpLine(text, x, y) {
+function drawTextLine(text, x, y) {
     // let currLine = getCurrLine()
     let lines = getLines()
     lines.forEach(currLine => {
@@ -98,12 +103,6 @@ function onResizeInput(num) {
     renderCanvas()
 }
 
-
-
-
-
-
-
 function renderSizeInput() {
     let currLine = getCurrLine()
     let size = currLine.size
@@ -114,7 +113,6 @@ function renderSizeInput() {
 
 function onSetText(txt) {
     updateTxt(txt)
-    console.log('txt:', txt)
     renderCanvas()
 
 }
