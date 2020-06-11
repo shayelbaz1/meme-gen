@@ -28,12 +28,17 @@
 
             <div class="btns-container flex center">
                 <button class="btn btn-switch-lines" value="switch-lines" onclick="onSwitchLines()">
+<<<<<<< HEAD
                     <img src="/img/svgs/switch-lines.svg">
+=======
+                    <img src="/meme-gen/img/svgs/switch-lines.svg">
+>>>>>>> 32563db9d37bb8113ee2e1494989db4842bd330c
                 </button>
                 <button class="btn btn-add" value="switch-lines" onclick="onSwitchLines()">
                     &#43
                 </button>
                 <button class="btn btn-delete" value="switch-lines" onclick="onSwitchLines()">
+<<<<<<< HEAD
                     <img src="/img/svgs/delete.svg">
                 </button>
             </div>
@@ -64,6 +69,51 @@
                     <img src="/img/icons/stroke.png">
                 </button>
 
+=======
+                    <img src="/meme-gen/img/svgs/delete.svg">
+                </button>
+            </div>
+
+            <div class="btns-edit-container flex center wrap">
+                <button class="btn btn-white" value="+" onclick="onResize(this.value)">
+                    <img src="/meme-gen/img/icons/font+.png">
+                </button>
+                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                    <img src="/meme-gen/img/icons/font-.png">
+                </button>
+                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                    <img src="/meme-gen/img/icons/align-left.png">
+                </button>
+                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                    <img src="/meme-gen/img/icons/align-center.png">
+                </button>
+                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                    <img src="/meme-gen/img/icons/align-right.png">
+                </button>
+
+                <div class="num-box num">
+                    <input name="font-size" type="number" onchange="onResizeInput(this.value)"
+                        onkeyup="onResizeInput(this.value)">
+                </div>
+
+                <button class="btn btn-white" value="-" onclick="onResize(this.value)">
+                    <img src="/meme-gen/img/icons/stroke.png">
+                </button>
+
+
+                <input class="btn btn-white" onchange="setColor(this.value)" type="color" name="color" id="color">
+
+                <div class="btns-container">
+                    <button class="btn btn-white" onclick="onMove(this.value)" value="down">
+                        <img src="/meme-gen/img/icons/down.png">
+                    </button>
+
+                    <button class="btn btn-white" onclick="onMove(this.value)" value="up">
+                        <img src="/meme-gen/img/icons/up.png">
+                    </button>
+                </div>
+            </div>
+>>>>>>> 32563db9d37bb8113ee2e1494989db4842bd330c
 
                 <input class="btn btn-white" onchange="setColor(this.value)" type="color" name="color" id="color">
 
