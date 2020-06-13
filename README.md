@@ -1,4 +1,4 @@
-# Ultimate Mem Creator 
+# Ultimate Meme Creator 
 by Shay elbaz
 
 Description:
