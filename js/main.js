@@ -142,6 +142,7 @@ function renderTextInput() {
     let currLine = getCurrLine()
     if (getLines().length === 0) return
     let elTextInput = document.querySelector('[name=text]')
+    console.log('currLine:', currLine)
     elTextInput.value = currLine.txt
 }
 function drawImgFromlocal() {

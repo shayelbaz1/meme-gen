@@ -119,13 +119,7 @@ function updateCurrLineFont(newFont) {
     currLine.font = newFont
 }
 
-function deleteLine() {
-    console.log('gMeme.lines before:', gMeme.lines)
-    console.log('gMeme.selectedLineIdx before:', gMeme.selectedLineIdx)
-    let lineIdx = gMeme.selectedLineIdx
-    gMeme.lines.splice(lineIdx, 1)
-    updateSelectedLine()
-}
+
 
 
 function addLine(value) {
@@ -147,17 +141,26 @@ function addLine(value) {
 function getCurrIdx() {
     return gMeme.selectedLineIdx
 }
+function deleteLine() {
+    console.log('gMeme.lines before:', gMeme.lines)
+    console.log('gMeme.selectedLineIdx before:', gMeme.selectedLineIdx)
+    let lineIdx = gMeme.selectedLineIdx
+    gMeme.lines.splice(lineIdx, 1)
+    updateSelectedLine()
+}
 
 function updateSelectedLine(idx) {
+    console.log('gMeme.selectedLineIdx before:', gMeme.selectedLineIdx)
     if (idx || idx === 0) {
         gMeme.selectedLineIdx = idx
         return
     }
-    else if (gMeme.selectedLineIdx === gMeme.lines.length - 1) {
+    else if (gMeme.selectedLineIdx >= gMeme.lines.length - 1) {
         gMeme.selectedLineIdx = 0
         return
     }
     gMeme.selectedLineIdx += 1
+    console.log('gMeme.selectedLineIdx After:', gMeme.selectedLineIdx)
 }
 
 function updateLineLocation(x, y) {
