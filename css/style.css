@@ -102,19 +102,6 @@ body {
     grid-template-columns: repeat(5, 20%);
 }
 
-.grid-container>* {
-    /* background-color: #80d; */
-    /* background-position: center; */
-    background-size: cover;
-    border: 2px solid #536;
-    text-align: center;
-    font-weight: bold;
-    font-size: 2rem;
-    /* padding: 1em; */
-    height: 160px;
-    box-sizing: border-box;
-}
-
 .canvas-container {
     width: 500px;
     height: 500px;
@@ -411,7 +398,7 @@ canvas {
     margin-bottom: inherit;
 }
 
-.grid-container>* {
+.grid-container img {
     background-size: cover;
     border: 2px solid #fff;
     border-radius: 7%;
@@ -420,9 +407,9 @@ canvas {
     justify-self: center;
 }
 
-@media (max-width: 780px) {}
-
-@media (max-width: 420px) {}
+.grid-container a {
+    margin: auto;
+}
 
 .placeholder {
     /* background: url("../img/dog.jpg"); */

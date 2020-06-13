@@ -33,7 +33,8 @@ function renderGallery() {
 
     let strHtml = images.map(function (img) {
         return `
-        <img onclick="onSelectImg('${img.id}')" src="./img/${img.id}.jpg">
+        <a href="#">
+        <img onclick="onSelectImg('${img.id}')" src="./img/${img.id}.jpg"></a>
         `
     }).join('')
 
