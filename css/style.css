@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    touch-action: manipulation;
 }
 
 /*#region BASE  */
@@ -29,9 +30,7 @@ body {
 
 .main-header {
     height: 73px;
-    padding-left: 120px;
-    padding-right: 240px;
-    /* margin-bottom: 20px; */
+    padding: 0px 30px;
     border-radius: 37px;
     background-color: #5970c1;
     background-image: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
@@ -63,13 +62,14 @@ body {
     text-decoration: none;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 520px) {
     .main-header {
         padding-left: 19px;
         padding-right: 20px;
     }
     .main-nav a {
-        margin-left: 30px;
+        margin-left: 14px;
+        font-size: 0.9rem;
     }
 }
 
