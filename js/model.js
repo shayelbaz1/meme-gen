@@ -54,7 +54,13 @@ var gMeme = {
     ]
 }
 
+function getAllImages() {
+    return gImgs
+}
 
+function filterImages(newSearch) {
+    return gImgs.filter(img => img.keywords.includes(newSearch))
+}
 
 function updateCanvasSize(width, height) {
     gCanvasData.width = width
@@ -189,10 +195,7 @@ function updateSelectedImg(imgId) {
     gMeme.selectedImgId = imgId
 }
 
-function getAllImages() {
-    // let images = gImgs.filter(img => img.keywords.includes('trump'))
-    return gImgs
-}
+
 
 function updateTxt(txt) {
     let currLine = getCurrLine()

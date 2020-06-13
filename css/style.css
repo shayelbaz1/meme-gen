@@ -404,10 +404,11 @@ canvas {
 /*#region GRID */
 
 .grid-container {
-    margin: inherit;
+    margin: auto;
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    margin-bottom: inherit;
 }
 
 .grid-container>* {
@@ -455,7 +456,7 @@ canvas {
     width: 225px;
     height: 225px;
     display: inline-block;
-    background-image: url(/img/shay.jpg);
+    background-image: url(../img/shay.jpg);
     background-size: cover;
     border-radius: 50%;
     border: 3px solid white;

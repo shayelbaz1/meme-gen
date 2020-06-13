@@ -8,14 +8,14 @@ var gCurrColor = 'white';
 var glastPos;
 var gIsMouseDown = false;
 var gIsImgLoaded = false;
-var gIsBlur = false
+var gIsBlur = true
 
 
 function init() {
     gElCanvas = document.getElementById('my-canvas');
     gCtx = gElCanvas.getContext('2d');
     resizeCanvas()
-    renderCanvas()
+    renderCanvas(true)
     renderGallery()
 }
 
@@ -39,6 +39,11 @@ function renderGallery() {
 
     let elGallery = document.querySelector('.grid-container')
     elGallery.innerHTML = strHtml
+}
+
+function onFilterImages(newSearch) {
+    console.log('newSearch:', newSearch)
+
 }
 
 function canvasClicked(ev) {
@@ -75,8 +80,8 @@ function onShowGalleryToggle() {
 }
 
 function onBtnSquare() {
-    let isBlur = !gIsBlur
-    renderCanvas(isBlur)
+    gIsBlur = !gIsBlur
+    renderCanvas(gIsBlur)
 }
 
 function onSetColorFont(newColor) {
