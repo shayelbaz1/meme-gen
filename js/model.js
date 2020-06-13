@@ -1,8 +1,11 @@
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
-
+var gCanvasData = {
+    width: 500,
+    height: 500
+}
 var gImgs = [
-    { id: 1, url: './img/1.jpg', keywords: ['happy'] },
-    { id: 2, url: './img/2.jpg', keywords: ['happy'] },
+    { id: 1, url: './img/1.jpg', keywords: ['trump', 'happy'] },
+    { id: 2, url: './img/2.jpg', keywords: ['puppy', 'happy'] },
     { id: 3, url: './img/3.jpg', keywords: ['happy'] },
     { id: 4, url: './img/4.jpg', keywords: ['happy'] },
     { id: 5, url: './img/5.jpg', keywords: ['happy'] },
@@ -28,28 +31,49 @@ var gMeme = {
     lines: [
         {
             txt: 'I love cows',
-            // txt: 'xxxxxxxxxxxyyyyyyyyyyy',
             size: 50,
+            font: 'impact',
             align: 'center',
             color: 'white',
             strokeColor: 'black',
             stroke: 2,
-            x: 250,
+            x: gCanvasData.width / 2,
             y: 50
         },
         {
             txt: 'So I never eat my wife',
             size: 50,
+            font: 'impact',
             align: 'center',
             color: 'white',
             strokeColor: 'black',
             stroke: 2,
-            x: 250,
-            y: 450
+            x: gCanvasData.width / 2,
+            y: gCanvasData.height - 50
         }
     ]
 }
 
+
+
+function updateCanvasSize(width, height) {
+    gCanvasData.width = width
+    gCanvasData.height = height
+    if (gCanvasData.width <= 300) updateFirstTwoLines()
+}
+
+
+function updateFirstTwoLines() {
+    gMeme.lines[0].x = gCanvasData.width / 2
+    gMeme.lines[0].y = 40
+    gMeme.lines[1].x = gCanvasData.width / 2
+    gMeme.lines[1].y = gCanvasData.height - 20
+    gMeme.lines.forEach(line => line.size = 32)
+}
+
+function getCanvasData() {
+    return gCanvasData
+}
 function updateCurrColor(newColor) {
     let currLine = getCurrLine()
     currLine.color = newColor
@@ -67,12 +91,11 @@ function updateStroke() {
 }
 
 function updateCurrLineAlign(newAlign) {
-    console.log('newAlign:', newAlign)
     let currLine = getCurrLine()
     switch (newAlign) {
         case 'right':
             currLine.align = 'right'
-            currLine.x = 480
+            currLine.x = gCanvasData.width - 20
             break;
         case 'left':
             currLine.align = 'left'
@@ -80,9 +103,14 @@ function updateCurrLineAlign(newAlign) {
             break;
         default:
             currLine.align = 'center'
-            currLine.x = 250
+            currLine.x = gCanvasData.width / 2
             break;
     }
+}
+
+function updateCurrLineFont(newFont) {
+    let currLine = getCurrLine()
+    currLine.font = newFont
 }
 
 function deleteLine() {
@@ -91,21 +119,21 @@ function deleteLine() {
     let lineIdx = gMeme.selectedLineIdx
     gMeme.lines.splice(lineIdx, 1)
     updateSelectedLine()
-    console.log('gMeme.lines:', gMeme.lines)
-    console.log('gMeme.selectedLineIdx:', gMeme.selectedLineIdx)
 }
 
 
 function addLine(value) {
+    let size = gCanvasData.width <= 300 ? 30 : 50
     var newLine = {
         txt: value,
-        size: 50,
+        size: size,
+        font: 'impact',
         align: 'center',
         color: 'white',
         strokeColor: 'black',
         stroke: 2,
-        x: 250,
-        y: 250
+        x: gCanvasData.width / 2,
+        y: gCanvasData.width / 2
     }
     gMeme.lines.push(newLine)
 }
@@ -113,11 +141,17 @@ function addLine(value) {
 function getCurrIdx() {
     return gMeme.selectedLineIdx
 }
-function updateSelectedLine() {
-    gMeme.selectedLineIdx += 1
-    if (gMeme.selectedLineIdx >= gMeme.lines.length) {
-        gMeme.selectedLineIdx = 0;
+
+function updateSelectedLine(idx) {
+    if (idx || idx === 0) {
+        gMeme.selectedLineIdx = idx
+        return
     }
+    else if (gMeme.selectedLineIdx === gMeme.lines.length - 1) {
+        gMeme.selectedLineIdx = 0
+        return
+    }
+    gMeme.selectedLineIdx += 1
 }
 
 function updateLineLocation(x, y) {
@@ -156,6 +190,7 @@ function updateSelectedImg(imgId) {
 }
 
 function getAllImages() {
+    // let images = gImgs.filter(img => img.keywords.includes('trump'))
     return gImgs
 }
 

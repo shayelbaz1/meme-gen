@@ -63,6 +63,16 @@ body {
     text-decoration: none;
 }
 
+@media (max-width: 420px) {
+    .main-header {
+        padding-left: 19px;
+        padding-right: 20px;
+    }
+    .main-nav a {
+        margin-left: 30px;
+    }
+}
+
 /*#endregion*/
 
 /*#region MAIN */
@@ -77,7 +87,7 @@ body {
 
 .panel-container {
     background-color: lightgray;
-    padding: 20px;
+    padding: 10px;
     border-radius: 30px;
     box-shadow: 1px 2px 26px 1px #ffffff5d;
     background-color: #68686879;
@@ -304,6 +314,13 @@ canvas {
     outline: 1px solid #bbc4d1;
 }
 
+.font-selector.btn {
+    width: auto;
+    padding: 0 5px;
+    font-family: popReg;
+    font-size: x-large;
+}
+
 /*#endregion  */
 
 /*#region DOWNLOAD  */
@@ -386,22 +403,19 @@ canvas {
 /*#region GRID */
 
 .grid-container {
+    margin: inherit;
     display: grid;
-    grid-gap: 3px;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
 
 .grid-container>* {
-    /* background-color: #80d; */
-    /* background-position: center; */
     background-size: cover;
-    border: 2px solid #536;
-    text-align: center;
-    font-weight: bold;
-    font-size: 2rem;
-    /* padding: 1em; */
+    border: 2px solid #fff;
+    border-radius: 7%;
     height: 160px;
     box-sizing: border-box;
+    justify-self: center;
 }
 
 @media (max-width: 780px) {}

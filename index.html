@@ -80,12 +80,22 @@
                     id="color">
 
 
-                <div class="btns-container">
-                    <button class="btn btn-white" onclick="onMove(this.value)" value="down">
+                <div class="btns-container flex">
+
+                    <select onchange="onSetFont(this.value)" class="font-selector btn btn-white" name="font" id="">
+                        <option value="impact">Impact</option>
+                        <option value="ariel">Ariel</option>
+                        <option value="popReg">Poppins</option>
+                        <option value="cursive">Cursive</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="monospace">Monospace</option>
+                    </select>
+
+                    <button value="down" class="btn btn-white" onclick="onMove(this.value)">
                         <img src="./img/icons/down.png">
                     </button>
 
-                    <button class="btn btn-white" onclick="onMove(this.value)" value="up">
+                    <button value="up" class="btn btn-white" onclick="onMove(this.value)">
                         <img src="./img/icons/up.png">
                     </button>
                 </div>
@@ -119,13 +129,17 @@
 
 
         <div class=" canvas-container">
-            <canvas onmouseup="onMouseUp()" onmousedown="onMouseDown(event)" onmousemove="onMouseMove(event)"
-                id="my-canvas" style="border: 1px solid black;"></canvas>
+            <canvas onclick="canvasClicked(event)" onmouseup="onMouseUp()" onmousedown="onMouseDown(event)"
+                onmousemove="onMouseMove(event)" id="my-canvas" style="border: 1px solid black;"></canvas>
+            <!-- <canvas onclick="canvasClicked(event)" onmouseup="onMouseUp()" onmousedown="onMouseDown(event)"
+                onmousemove="onMouseMove(event)" id="my-canvas" style="border: 1px solid black;"></canvas> -->
         </div>
 
     </main>
     <hr>
     <!-- Gallery -->
+    <!-- <label for="">Filter:</label>
+    <input type="text"> -->
     <div class="grid-container" id="#gallery"></div>
 
 

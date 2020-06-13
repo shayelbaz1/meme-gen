@@ -41,6 +41,34 @@ function renderGallery() {
     elGallery.innerHTML = strHtml
 }
 
+function canvasClicked(ev) {
+    // TODO: find out if clicked inside of star chart
+    const { offsetX: x, offsetY: y } = ev;
+    console.log('{offsetX: x, offsetY: y}:', { offsetX: x, offsetY: y })
+
+    var lines = getLines()
+    console.log('lines:', lines)
+    var clickedLine = lines.find((line, idx) => {
+        let startY = line.y - line.size - 6;
+        let endY = line.y + 8;
+        console.log('startY:', startY)
+        console.log('endY:', endY)
+
+        return (y >= startY && y <= endY);
+    });
+    if (clickedLine) {
+        let currIdx = lines.findIndex(line => clickedLine.y === line.y)
+        updateSelectedLine(currIdx)
+        renderCanvas()
+
+    }
+}
+
+function onSetFont(newFont) {
+    updateCurrLineFont(newFont)
+    renderCanvas()
+}
+
 function onShowGalleryToggle() {
     let elMainContainer = document.querySelector('.main-container')
     elMainContainer.classList.toggle('hide')
@@ -52,7 +80,6 @@ function onBtnSquare() {
 }
 
 function onSetColorFont(newColor) {
-    console.log('newColor:', newColor)
     updateCurrColor(newColor)
     renderCanvas()
 
@@ -80,7 +107,6 @@ function onDeleteLine() {
 function onAddLine(value) {
     let elTextInput = document.querySelector('[name=text]')
     var value = elTextInput.value
-    console.log('value:', value)
     addLine(value)
     renderCanvas()
 }
@@ -108,9 +134,10 @@ function onMove(direction) {
 
 
 function renderTextInput() {
+    let currLine = getCurrLine()
     if (getLines().length === 0) return
     let elTextInput = document.querySelector('[name=text]')
-    elTextInput.value = getCurrLine().txt
+    elTextInput.value = currLine.txt
 }
 function drawImgFromlocal() {
     let currImg = getCurrImg()
@@ -119,11 +146,11 @@ function drawImgFromlocal() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
         gIsImgLoaded = true
-        drawTextLine()
+        drawTextLines()
     }
 }
 
-function drawTextLine(text, x, y) {
+function drawTextLines(text, x, y) {
     // let currLine = getCurrLine()
     let lines = getLines()
     let currIdx = getCurrIdx()
@@ -137,6 +164,7 @@ function drawTextLine(text, x, y) {
         let color = currLine.color
         let stroke = currLine.stroke
         let strokeColor = currLine.strokeColor
+        let font = currLine.font
         if (idx === currIdx && !gIsBlur) {
             drawRect(x, y, size + 16, 'white')
         }
@@ -147,7 +175,7 @@ function drawTextLine(text, x, y) {
         gCtx.lineWidth = stroke;
         gCtx.strokeStyle = strokeColor;
         gCtx.fillStyle = color;
-        gCtx.font = `${size}px impact`;
+        gCtx.font = `${size}px ${font}`;
         gCtx.textAlign = align;
 
         gCtx.fillText(text, x, y);
@@ -156,7 +184,6 @@ function drawTextLine(text, x, y) {
 }
 
 function onResize(sign) {
-    console.log('sign:', sign)
     resizeFontSize(sign)
     renderCanvas()
 }
@@ -182,9 +209,13 @@ function onSetText(txt) {
 
 function resizeCanvas() {
     var elContainer = document.querySelector('.canvas-container');
+    let width = elContainer.offsetWidth
+    let height = elContainer.offsetHeight
 
-    gElCanvas.width = elContainer.offsetWidth;
-    gElCanvas.height = elContainer.offsetHeight;
+    updateCanvasSize(width, height)
+
+    gElCanvas.width = width;
+    gElCanvas.height = height;
 }
 
 
@@ -282,7 +313,6 @@ function onMouseDown(ev) {
     gIsMouseDown = true
     var { offsetX, offsetY } = ev;
     glastPos = { offsetX, offsetY }
-    console.log('glastPos:', glastPos)
     draw(offsetX, offsetY)
 }
 function onMouseUp() {
