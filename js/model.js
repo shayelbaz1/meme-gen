@@ -53,7 +53,13 @@ var gMeme = {
         }
     ]
 }
+function updateLineLocationByDiff(newX, newY) {
+    console.log('newX, newY in modal:', newX, newY)
+    let currLine = getCurrLine()
+    currLine.x += newX
+    currLine.y += newY
 
+}
 function addImageBySrc(newSrc) {
     console.log('newSrc:', newSrc)
     let newImage = addImage(newSrc)

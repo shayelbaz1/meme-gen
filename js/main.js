@@ -5,7 +5,7 @@ var gCtx;
 var gCurrShape = 'line';
 var gCurrColor = 'white';
 
-var glastPos;
+var gFirstPos;
 var gIsMouseDown = false;
 var gIsBlur = true
 
@@ -62,29 +62,6 @@ function onFilterImages(newSearch) {
 
 }
 
-function canvasClicked(ev) {
-    // TODO: find out if clicked inside of star chart
-    const { offsetX: x, offsetY: y } = ev;
-    console.log('{offsetX: x, offsetY: y}:', { offsetX: x, offsetY: y })
-
-    var lines = getLines()
-    console.log('lines:', lines)
-    var clickedLine = lines.find((line, idx) => {
-        let startY = line.y - line.size - 6;
-        let endY = line.y + 8;
-        console.log('startY:', startY)
-        console.log('endY:', endY)
-
-        return (y >= startY && y <= endY);
-    });
-    if (clickedLine) {
-        let currIdx = lines.findIndex(line => clickedLine.y === line.y)
-        updateSelectedLine(currIdx)
-        renderCanvas()
-
-    }
-}
-
 function onSetFont(newFont) {
     updateCurrLineFont(newFont)
     renderCanvas()
@@ -126,8 +103,8 @@ function onDeleteLine() {
 }
 
 function onAddLine(value) {
-    let elTextInput = document.querySelector('[name=text]')
-    var value = elTextInput.value
+    const elTextInput = document.querySelector('[name=text]')
+    value = elTextInput.value
     addLine(value)
     renderCanvas()
 }
@@ -158,7 +135,6 @@ function renderTextInput() {
     let currLine = getCurrLine()
     if (getLines().length === 0) return
     let elTextInput = document.querySelector('[name=text]')
-    console.log('currLine:', currLine)
     elTextInput.value = currLine.txt
 }
 function drawImgFromlocal(url) {
@@ -249,20 +225,6 @@ function drawImgFromRemote() {
     }
 }
 
-
-function drawTriangle(x, y) {
-    gCtx.beginPath();
-    gCtx.moveTo(x, y);
-    var randInt = getRandomIntEx(10, 101)
-    gCtx.lineTo(x + randInt, y);
-    gCtx.lineTo(x, y + randInt);
-    gCtx.closePath(); //insted of lineTo(x,y) 
-    gCtx.strokeStyle = 'black';
-    gCtx.stroke();
-    gCtx.fillStyle = gCurrColor;
-    gCtx.fill();
-}
-
 function drawRect(x, y, height, strokeColor = '#00000000') {
     let width = 1000;
     gCtx.beginPath();
@@ -273,18 +235,6 @@ function drawRect(x, y, height, strokeColor = '#00000000') {
     gCtx.stroke();
     gCtx.fillStyle = '#00000000';
     gCtx.fillRect(x - width / 2, y - height / 2 - 15, width, height);
-}
-
-function drawArc(x, y) {
-    gCtx.beginPath()
-    gCtx.lineWidth = '6'
-    var randInt = getRandomIntEx(10, 61)
-    gCtx.arc(x, y, randInt, 0, 2 * Math.PI);
-    gCtx.strokeStyle = 'black'
-    gCtx.stroke();
-    gCtx.fillStyle = gCurrColor
-    gCtx.fill()
-
 }
 
 function drawText(text, x, y) {
@@ -321,20 +271,55 @@ function drawLine(x, y, xEnd, yEnd) {
     gCtx.strokeStyle = gCurrColor
     gCtx.stroke()
 }
+
+function canvasClicked(ev) {
+    // TODO: find out if clicked inside of star chart
+    const { offsetX: x, offsetY: y } = ev;
+
+    var lines = getLines()
+    var clickedLine = lines.find((line, idx) => {
+        let startY = line.y - line.size - 6;
+        let endY = line.y + 8;
+
+        return (y >= startY && y <= endY);
+    });
+
+    if (clickedLine) {
+        let currIdx = lines.findIndex(line => clickedLine.y === line.y)
+        updateSelectedLine(currIdx)
+        renderCanvas()
+        return clickedLine
+    }
+    else {
+        renderCanvas(true)
+        return null
+    }
+}
+
 function onMouseMove(ev) {
     if (!gIsMouseDown) return
-    var { offsetX, offsetY } = ev;
-    var currPos = { offsetX, offsetY }
-    draw(glastPos.offsetX, glastPos.offsetY, currPos.offsetX, currPos.offsetY)
-    glastPos = { offsetX, offsetY }
+
+    const { offsetX, offsetY } = ev
+    const currPos = { offsetX, offsetY }
+
+    const newX = currPos.offsetX - gFirstPos.offsetX
+    const newY = currPos.offsetY - gFirstPos.offsetY
+    const newPosDiff = { newX, newY }
+
+    updateLineLocationByDiff(newX, newY)
+    renderCanvas()
+
+    gFirstPos = { offsetX, offsetY }
 }
 
 
 function onMouseDown(ev) {
     gIsMouseDown = true
-    var { offsetX, offsetY } = ev;
-    glastPos = { offsetX, offsetY }
-    draw(offsetX, offsetY)
+    canvasClicked(ev)
+    let { offsetX, offsetY } = ev;
+    gFirstPos = { offsetX, offsetY }
+    console.log('gFirstPos:', gFirstPos)
+    // draw(offsetX, offsetY)
 }
 function onMouseUp() {
     gIsMouseDown = false
