@@ -30,8 +30,8 @@ var gMeme = {
 
     lines: [
         {
-            txt: 'I love cows',
-            size: 50,
+            txt: 'Do you wanna be my girlfriend?',
+            size: 35,
             font: 'impact',
             align: 'center',
             color: 'white',
@@ -41,21 +41,39 @@ var gMeme = {
             y: 50
         },
         {
-            txt: 'So I never eat my wife',
-            size: 50,
+            txt: 'No D in girlfriend, cous you\'ll get it later',
+            size: 30,
             font: 'impact',
             align: 'center',
             color: 'white',
             strokeColor: 'black',
             stroke: 2,
             x: gCanvasData.width / 2,
-            y: gCanvasData.height - 50
+            y: gCanvasData.height - 30
         }
     ]
 }
 
+function addImageBySrc(newSrc) {
+    console.log('newSrc:', newSrc)
+    let newImage = addImage(newSrc)
+    gImgs.push(newImage)
+    updateSelectedImg(newImage.id)
+}
+
+function addImage(newSrc) {
+    let lastId = gImgs[gImgs.length - 1].id
+    return {
+        id: lastId + 1,
+        url: newSrc,
+        keywords: ['happy']
+    }
+}
+
 function getAllImages() {
-    return gImgs
+    let images = [...gImgs]
+    images.sort((a, b) => b.id - a.id)
+    return images
 }
 
 function filterImages(newSearch) {
@@ -123,10 +141,9 @@ function updateCurrLineFont(newFont) {
 
 
 function addLine(value) {
-    let size = gCanvasData.width <= 300 ? 30 : 50
     var newLine = {
         txt: value,
-        size: size,
+        size: 30,
         font: 'impact',
         align: 'center',
         color: 'white',

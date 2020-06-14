@@ -7,7 +7,6 @@ var gCurrColor = 'white';
 
 var glastPos;
 var gIsMouseDown = false;
-var gIsImgLoaded = false;
 var gIsBlur = true
 
 
@@ -34,12 +33,28 @@ function renderGallery() {
     let strHtml = images.map(function (img) {
         return `
         <a href="#">
-        <img onclick="onSelectImg('${img.id}')" src="./img/${img.id}.jpg"></a>
+        <img onclick="onSelectImg('${img.id}')" src="${img.url}"></a>
         `
-    }).join('')
+    })
 
     let elGallery = document.querySelector('.grid-container')
-    elGallery.innerHTML = strHtml
+    elGallery.innerHTML = strHtml.join('')
+}
+
+window.addEventListener('load', function () {
+    document.querySelector('input[type="file"]').addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            let newSrc = URL.createObjectURL(this.files[0]); // set src to blob url
+            addImageBySrc(newSrc)
+            renderCanvas()
+            renderGallery()
+        }
+    });
+});
+
+function imageIsLoaded() {
+    alert(this.src);  // blob url
+    // update width and height ...
 }
 
 function onFilterImages(newSearch) {
@@ -146,13 +161,12 @@ function renderTextInput() {
     console.log('currLine:', currLine)
     elTextInput.value = currLine.txt
 }
-function drawImgFromlocal() {
+function drawImgFromlocal(url) {
     let currImg = getCurrImg()
     var img = new Image()
-    img.src = currImg.url;//'./img/waves.jpg'
+    img.src = url ? url : currImg.url;//'./img/waves.jpg'
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
-        gIsImgLoaded = true
         drawTextLines()
     }
 }

@@ -185,7 +185,7 @@ canvas {
 }
 
 .btns-container>* {
-    margin-left: 1.2rem;
+    margin: 0px 0.6rem;
 }
 
 .btn-square {
@@ -403,6 +403,7 @@ canvas {
     border: 2px solid #fff;
     border-radius: 7%;
     height: 160px;
+    width: 160px;
     box-sizing: border-box;
     justify-self: center;
 }
@@ -420,6 +421,40 @@ canvas {
     align-items: center;
     justify-content: center;
     color: #fff;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #33be6d;
+    color: ivory;
+    font-size: 55px;
+    padding: 6px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    height: 49px;
+    margin: 0px 20px 20px;
+    transition: 0.5s;
+    width: 160px;
+}
+
+.custom-file-upload:hover {
+    background-color: #00f86887;
+}
+
+.custom-file-upload:active {
+    border: 0px;
+}
+
+.custom-file-upload i {
+    font-size: xx-large;
 }
 
 /*#endregion  */
@@ -464,13 +499,15 @@ canvas {
     text-transform: uppercase;
 }
 
-.team-member p {
-    margin-block-start: 3px;
-    margin-block-end: 0px;
+.text-muted {
+    color: #62676c;
 }
 
-.text-muted {
-    color: #868e96!important;
+.text-muted.team-text {
+    margin-block-start: 3px;
+    margin-block-end: 0px;
+    font-size: 25px;
+    padding-bottom: 10px;
 }
 
 ul.social-buttons {
